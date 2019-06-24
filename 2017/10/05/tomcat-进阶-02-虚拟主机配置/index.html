@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="tomcat,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="tomcat虚拟主机配置概要 虚拟主机的概述 Tomcat处理HTTP请求的过程 配置基于主机名的虚拟主机 配置基于端口号的虚拟主机  虚拟主机的概述 虚拟主机的概念 虚拟主机的作用 虚拟主机的实现方式  虚拟主机的概念一台物理主机上搭建多个WEB站点，每个WEB站点独立运行，互不干扰。这些站点就称为“虚拟主机”。 虚拟主机的作用节省资源，便于管理。 虚拟主机的实现方式基于主机名的虚拟主机多个域名">
+<meta name="keywords" content="tomcat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tomcat-进阶-02-虚拟主机配置">
+<meta property="og:url" content="http://yoursite.com/2017/10/05/tomcat-进阶-02-虚拟主机配置/index.html">
+<meta property="og:site_name" content="FutureWL&#39;s Blog">
+<meta property="og:description" content="tomcat虚拟主机配置概要 虚拟主机的概述 Tomcat处理HTTP请求的过程 配置基于主机名的虚拟主机 配置基于端口号的虚拟主机  虚拟主机的概述 虚拟主机的概念 虚拟主机的作用 虚拟主机的实现方式  虚拟主机的概念一台物理主机上搭建多个WEB站点，每个WEB站点独立运行，互不干扰。这些站点就称为“虚拟主机”。 虚拟主机的作用节省资源，便于管理。 虚拟主机的实现方式基于主机名的虚拟主机多个域名">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-24T00:50:18.105Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tomcat-进阶-02-虚拟主机配置">
+<meta name="twitter:description" content="tomcat虚拟主机配置概要 虚拟主机的概述 Tomcat处理HTTP请求的过程 配置基于主机名的虚拟主机 配置基于端口号的虚拟主机  虚拟主机的概述 虚拟主机的概念 虚拟主机的作用 虚拟主机的实现方式  虚拟主机的概念一台物理主机上搭建多个WEB站点，每个WEB站点独立运行，互不干扰。这些站点就称为“虚拟主机”。 虚拟主机的作用节省资源，便于管理。 虚拟主机的实现方式基于主机名的虚拟主机多个域名">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/05/tomcat-进阶-02-虚拟主机配置/">
+
+
+
+
+
+  <title>tomcat-进阶-02-虚拟主机配置 | FutureWL's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">FutureWL's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我的程序之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-work">
+          <a href="/work/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wifi"></i> <br>
+            
+            不周山
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tech">
+          <a href="/tech/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-gear"></i> <br>
+            
+            通天塔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/life/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-compass"></i> <br>
+            
+            好望角
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-booklist">
+          <a href="/booklist/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-diamond"></i> <br>
+            
+            书影音
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/05/tomcat-进阶-02-虚拟主机配置/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FutureWL">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FutureWL's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tomcat-进阶-02-虚拟主机配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-05T07:26:07+08:00">
+                2017-10-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="tomcat虚拟主机配置"><a href="#tomcat虚拟主机配置" class="headerlink" title="tomcat虚拟主机配置"></a>tomcat虚拟主机配置</h1><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><ul>
+<li>虚拟主机的概述</li>
+<li>Tomcat处理HTTP请求的过程</li>
+<li>配置基于主机名的虚拟主机</li>
+<li>配置基于端口号的虚拟主机</li>
+</ul>
+<h3 id="虚拟主机的概述"><a href="#虚拟主机的概述" class="headerlink" title="虚拟主机的概述"></a>虚拟主机的概述</h3><ul>
+<li>虚拟主机的概念</li>
+<li>虚拟主机的作用</li>
+<li>虚拟主机的实现方式</li>
+</ul>
+<h4 id="虚拟主机的概念"><a href="#虚拟主机的概念" class="headerlink" title="虚拟主机的概念"></a>虚拟主机的概念</h4><p>一台物理主机上搭建多个WEB站点，每个WEB站点独立运行，互不干扰。这些站点就称为“虚拟主机”。</p>
+<h4 id="虚拟主机的作用"><a href="#虚拟主机的作用" class="headerlink" title="虚拟主机的作用"></a>虚拟主机的作用</h4><p>节省资源，便于管理。</p>
+<h4 id="虚拟主机的实现方式"><a href="#虚拟主机的实现方式" class="headerlink" title="虚拟主机的实现方式"></a>虚拟主机的实现方式</h4><h5 id="基于主机名的虚拟主机"><a href="#基于主机名的虚拟主机" class="headerlink" title="基于主机名的虚拟主机"></a>基于主机名的虚拟主机</h5><p>多个域名解析到同一个IP地址，在WEB服务器里添加多个站点，每个站点设定一个主机名。HTTP协议里包含了主机名信息，当WEB服务器收到访问请求时，就可以根据不同的主机名来访问不同的网站。</p>
+<h5 id="基于端口号的虚拟主机"><a href="#基于端口号的虚拟主机" class="headerlink" title="基于端口号的虚拟主机"></a>基于端口号的虚拟主机</h5><p>一个IP地址，通过不同的端口实现不同网站的访问。</p>
+<h5 id="基于IP的虚拟主机"><a href="#基于IP的虚拟主机" class="headerlink" title="基于IP的虚拟主机"></a>基于IP的虚拟主机</h5><p>服务器绑定多个IP，然后配置服务器，把多个网站绑定在不同的IP上。</p>
+<h3 id="Tomcat处理HTTP请求的过程"><a href="#Tomcat处理HTTP请求的过程" class="headerlink" title="Tomcat处理HTTP请求的过程"></a>Tomcat处理HTTP请求的过程</h3><h3 id="配置基于主机名的虚拟主机"><a href="#配置基于主机名的虚拟主机" class="headerlink" title="配置基于主机名的虚拟主机"></a>配置基于主机名的虚拟主机</h3><h3 id="配置基于端口号的虚拟主机"><a href="#配置基于端口号的虚拟主机" class="headerlink" title="配置基于端口号的虚拟主机"></a>配置基于端口号的虚拟主机</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/05/tomcat-进阶-01-虚拟目录设置/" rel="next" title="tomcat-进阶-01-虚拟目录设置">
+                <i class="fa fa-chevron-left"></i> tomcat-进阶-01-虚拟目录设置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/09/代码大全-代码大全-02-创建高质量的代码-06-可以工作的类/" rel="prev" title="代码大全-02-创建高质量的代码-06-可以工作的类">
+                代码大全-02-创建高质量的代码-06-可以工作的类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="FutureWL">
+            
+              <p class="site-author-name" itemprop="name">FutureWL</p>
+              <p class="site-description motion-element" itemprop="description">想要成为全栈的小猿</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Future" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:wl18607097289@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jxut-bst.github.io/" title="蓝色技术工作室" target="_blank">蓝色技术工作室</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tomcat虚拟主机配置"><span class="nav-number">1.</span> <span class="nav-text">tomcat虚拟主机配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.1.</span> <span class="nav-text">概要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟主机的概述"><span class="nav-number">1.1.1.</span> <span class="nav-text">虚拟主机的概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#虚拟主机的概念"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">虚拟主机的概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#虚拟主机的作用"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">虚拟主机的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#虚拟主机的实现方式"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">虚拟主机的实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基于主机名的虚拟主机"><span class="nav-number">1.1.1.3.1.</span> <span class="nav-text">基于主机名的虚拟主机</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于端口号的虚拟主机"><span class="nav-number">1.1.1.3.2.</span> <span class="nav-text">基于端口号的虚拟主机</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于IP的虚拟主机"><span class="nav-number">1.1.1.3.3.</span> <span class="nav-text">基于IP的虚拟主机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat处理HTTP请求的过程"><span class="nav-number">1.1.2.</span> <span class="nav-text">Tomcat处理HTTP请求的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置基于主机名的虚拟主机"><span class="nav-number">1.1.3.</span> <span class="nav-text">配置基于主机名的虚拟主机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置基于端口号的虚拟主机"><span class="nav-number">1.1.4.</span> <span class="nav-text">配置基于端口号的虚拟主机</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FutureWL</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

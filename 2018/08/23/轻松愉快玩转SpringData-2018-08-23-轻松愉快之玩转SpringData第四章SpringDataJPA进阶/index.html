@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关于 Repository 接口Repository 讲解 Repository 接口是 Spring Data 的核心接口，不提供任何方法 public interface Repository&amp;lt;T,ID extends Serializable&amp;gt; { } @RepositoryDefinition 注解的使用  Repository是一个空接口，标记接口 没有包含方法声明的接口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第四章 Spring Data JPA 进阶">
+<meta property="og:url" content="http://yoursite.com/2018/08/23/轻松愉快玩转SpringData-2018-08-23-轻松愉快之玩转SpringData第四章SpringDataJPA进阶/index.html">
+<meta property="og:site_name" content="FutureWL&#39;s Blog">
+<meta property="og:description" content="关于 Repository 接口Repository 讲解 Repository 接口是 Spring Data 的核心接口，不提供任何方法 public interface Repository&amp;lt;T,ID extends Serializable&amp;gt; { } @RepositoryDefinition 注解的使用  Repository是一个空接口，标记接口 没有包含方法声明的接口">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-24T00:50:18.102Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第四章 Spring Data JPA 进阶">
+<meta name="twitter:description" content="关于 Repository 接口Repository 讲解 Repository 接口是 Spring Data 的核心接口，不提供任何方法 public interface Repository&amp;lt;T,ID extends Serializable&amp;gt; { } @RepositoryDefinition 注解的使用  Repository是一个空接口，标记接口 没有包含方法声明的接口">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/23/轻松愉快玩转SpringData-2018-08-23-轻松愉快之玩转SpringData第四章SpringDataJPA进阶/">
+
+
+
+
+
+  <title>第四章 Spring Data JPA 进阶 | FutureWL's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">FutureWL's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我的程序之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-work">
+          <a href="/work/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wifi"></i> <br>
+            
+            不周山
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tech">
+          <a href="/tech/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-gear"></i> <br>
+            
+            通天塔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/life/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-compass"></i> <br>
+            
+            好望角
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-booklist">
+          <a href="/booklist/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-diamond"></i> <br>
+            
+            书影音
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/23/轻松愉快玩转SpringData-2018-08-23-轻松愉快之玩转SpringData第四章SpringDataJPA进阶/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FutureWL">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FutureWL's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第四章 Spring Data JPA 进阶</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-23T15:20:19+08:00">
+                2018-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/轻松愉快之玩转SpringData/" itemprop="url" rel="index">
+                    <span itemprop="name">轻松愉快之玩转SpringData</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="关于-Repository-接口"><a href="#关于-Repository-接口" class="headerlink" title="关于 Repository 接口"></a>关于 Repository 接口</h1><h2 id="Repository-讲解"><a href="#Repository-讲解" class="headerlink" title="Repository 讲解"></a>Repository 讲解</h2><ul>
+<li>Repository 接口是 Spring Data 的核心接口，不提供任何方法</li>
+<li>public interface Repository&lt;T,ID extends Serializable&gt; { }</li>
+<li>@RepositoryDefinition 注解的使用</li>
+</ul>
+<p>Repository是一个空接口，标记接口 <code>没有包含方法声明的接口</code></p>
+<a id="more"></a>
+<h3 id="RepositoryDefinition-注解的使用"><a href="#RepositoryDefinition-注解的使用" class="headerlink" title="@RepositoryDefinition 注解的使用"></a>@RepositoryDefinition 注解的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> weilai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0.0 2018/8/23</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RepositoryDefinition</span>(domainClass = Employee.class, idClass = Integer.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeRepository</span> </span>&#123; <span class="comment">// extends Repository&lt;Employee, Integer&gt; &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Employee <span class="title">findByName</span><span class="params">(String name)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Repository-子接口详解"><a href="#Repository-子接口详解" class="headerlink" title="Repository 子接口详解"></a>Repository 子接口详解</h1><ul>
+<li>CrudRepository：<ul>
+<li>继承 Repository，实现了 CRUD 相关的方法。</li>
+</ul>
+</li>
+<li>PagingAndSortingRepository：<ul>
+<li>继承 CrudRepository，实现了 分页和排序 相关的方法。</li>
+</ul>
+</li>
+<li>JpaRepository：<ul>
+<li>继承 PagingAndSortingRepository，实现了 JPA 相关的方法。</li>
+</ul>
+</li>
+</ul>
+<h1 id="查询方法定义规则和使用"><a href="#查询方法定义规则和使用" class="headerlink" title="查询方法定义规则和使用"></a>查询方法定义规则和使用</h1><p>Repository 中查询方法定义规则和使用</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Keyword</th>
+<th>Sample</th>
+<th>JPQL snippet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">And</td>
+<td>findByLastnameAndFirstname</td>
+<td>where <br> x.lastname = ?1 <br> and <br> x.firstname = ?2</td>
+</tr>
+<tr>
+<td style="text-align:center">Or</td>
+<td>findByLastnameOrFirstname</td>
+<td>where <br> x.lastname = ?1 <br> or <br> x.firstname = ?2</td>
+</tr>
+<tr>
+<td style="text-align:center">Between</td>
+<td>findByStartDataBetween</td>
+<td>where <br> x.startData between <br> ?1 and ?2</td>
+</tr>
+<tr>
+<td style="text-align:center">LessThan</td>
+<td>findByAgeLessThan</td>
+<td>where x.age &lt; ?1</td>
+</tr>
+<tr>
+<td style="text-align:center">GreaterThan</td>
+<td>findByAgeGreaterThan</td>
+<td>where x.age &gt; ?1</td>
+</tr>
+<tr>
+<td style="text-align:center">After</td>
+<td>findByStartDataAfter</td>
+<td>where x.startData &gt; ?1</td>
+</tr>
+<tr>
+<td style="text-align:center">Before</td>
+<td>findByStartDataAfter</td>
+<td>where x.startData &gt; ?1</td>
+</tr>
+<tr>
+<td style="text-align:center">IsNull</td>
+<td>findByAgeIsNull</td>
+<td>where x.age is null</td>
+</tr>
+<tr>
+<td style="text-align:center">IsNotNull,NotNull</td>
+<td>findByAge(Is)NotNull</td>
+<td>where x.age is not null</td>
+</tr>
+<tr>
+<td style="text-align:center">Like</td>
+<td>findByFirstnameLike</td>
+<td>… where x.firstname like ?1</td>
+</tr>
+<tr>
+<td style="text-align:center">NotLike</td>
+<td>findByFirstnameNotLike</td>
+<td>… where x.firstname not like ?1</td>
+</tr>
+<tr>
+<td style="text-align:center">StartingWith</td>
+<td>findByFirstnameStartingWith</td>
+<td>… where x.firstname like ?1 (parameter bound with appended %)</td>
+</tr>
+<tr>
+<td style="text-align:center">EndingWith</td>
+<td>findByFirstnameEndingWith</td>
+<td>… where x.firstname like ?1 (parameter bound with prepended %)</td>
+</tr>
+<tr>
+<td style="text-align:center">Containing</td>
+<td>findByFirstnameContaining</td>
+<td>… where x.firstname like ?1 (parameter bound wrapped in %)</td>
+</tr>
+<tr>
+<td style="text-align:center">OrderBy</td>
+<td>findByAgeOrderByLastnameDesc</td>
+<td>… where x.age = ?1 order by x.lastname desc</td>
+</tr>
+<tr>
+<td style="text-align:center">Not</td>
+<td>findByLastnameNot</td>
+<td>… where x.lastname &lt;&gt; ?1</td>
+</tr>
+<tr>
+<td style="text-align:center">In</td>
+<td>findByAgeIn(Collection<age> ages)</age></td>
+<td>… where x.age in ?1</td>
+</tr>
+<tr>
+<td style="text-align:center">NotIn</td>
+<td>findByAgeNotIn(Collection<age> ages)</age></td>
+<td>… where x.age not in ?1</td>
+</tr>
+<tr>
+<td style="text-align:center">True</td>
+<td>findByActiveTrue()</td>
+<td>… where x.active = true</td>
+</tr>
+<tr>
+<td style="text-align:center">False</td>
+<td>findByActiveFalse()</td>
+<td>… where x.active = false</td>
+</tr>
+<tr>
+<td style="text-align:center">IgnoreCase</td>
+<td>findByFirstnameIgnoreCase</td>
+<td>… where UPPER(x.firstame) = UPPER(?1)</td>
+</tr>
+</tbody>
+</table>
+<p>操作实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.imooc.repository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.imooc.domain.Employee;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.repository.Repository;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.repository.RepositoryDefinition;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 数据操作实体</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> weilai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0.0 2018/8/23</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RepositoryDefinition</span>(domainClass = Employee.class, idClass = Integer.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeRepository</span> </span>&#123; <span class="comment">// extends Repository&lt;Employee, Integer&gt; &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Employee <span class="title">findByName</span><span class="params">(String name)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// where name like ?% and age &lt;?</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Employee&gt; <span class="title">findByNameStartingWithAndAgeLessThan</span><span class="params">(String name, Integer age)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// where name like ?% and age &gt;?</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Employee&gt; <span class="title">findByNameEndingWithAndAgeLessThan</span><span class="params">(String name, Integer age)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// where name in (?,?,?....) or age &gt;?</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Employee&gt; <span class="title">findByNameInOrAgeLessThan</span><span class="params">(List&lt;String&gt; nameList, Integer age)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于按照方法命名规则来使用的话，有弊端：</p>
+<ol>
+<li>方法名会比较长： 约定大于配置</li>
+<li>对于一些复杂的查询，是很难实现</li>
+</ol>
+<h1 id="Query注解使用"><a href="#Query注解使用" class="headerlink" title="Query注解使用"></a>Query注解使用</h1><ul>
+<li>在 Repository 方法中使用，不需要遵循查询方法命名规则</li>
+<li>只需要将 @Query 定义在 Repository 方法上</li>
+<li>命名参数及索引参数的使用 ?1 ?2 :name :age 占位符  </li>
+<li>本地查询(@Query(nativeQuery = true,value = “select count(1) from employee”)) 开启 nativeQuery 使用原生 SQL 进行查询</li>
+</ul>
+<h1 id="更新操作整合事务使用"><a href="#更新操作整合事务使用" class="headerlink" title="更新操作整合事务使用"></a>更新操作整合事务使用</h1><ul>
+<li>@Modifying 注解使用</li>
+<li>@Modifying 结合 @Query 注解执行更新操作</li>
+</ul>
+<p>事务在Spring data中的使用：</p>
+<ol>
+<li>事务一般是在Service层作注解</li>
+<li>@Query、 @Modifying、@Transactional的综合使用</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Query</span>(nativeQuery = <span class="keyword">true</span>, value = <span class="string">"select count(1) from employee"</span>) <span class="comment">// 注意！！此处 employee 是表名</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getCount</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Modifying</span></span><br><span class="line"><span class="meta">@Query</span>(<span class="string">"update Employee o set o.age = :age where o.id = :id"</span>) <span class="comment">// 注意！！此处 Employee 是类名</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(@Param(<span class="string">"id"</span>)</span> Integer id, @<span class="title">Param</span><span class="params">(<span class="string">"age"</span>)</span> Integer age)</span>;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(Integer id, Integer age)</span> </span>&#123;</span><br><span class="line">        employeeRepository.update(id, age);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>一般在 Service 的一个操作中有很多 dao方法，所以都要让他们在一个事务中。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/23/轻松愉快玩转SpringData-2018-08-23-轻松愉快之玩转SpringData第三章SpringData快速起步/" rel="next" title="第三章 Spring Data 快速起步">
+                <i class="fa fa-chevron-left"></i> 第三章 Spring Data 快速起步
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/23/轻松愉快玩转SpringData-2018-08-23-轻松愉快之玩转SpringData第五章SpringDataJPA高级/" rel="prev" title="第五章 Spring Data JPA 高级">
+                第五章 Spring Data JPA 高级 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="FutureWL">
+            
+              <p class="site-author-name" itemprop="name">FutureWL</p>
+              <p class="site-description motion-element" itemprop="description">想要成为全栈的小猿</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Future" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:wl18607097289@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jxut-bst.github.io/" title="蓝色技术工作室" target="_blank">蓝色技术工作室</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于-Repository-接口"><span class="nav-number">1.</span> <span class="nav-text">关于 Repository 接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Repository-讲解"><span class="nav-number">1.1.</span> <span class="nav-text">Repository 讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RepositoryDefinition-注解的使用"><span class="nav-number">1.1.1.</span> <span class="nav-text">@RepositoryDefinition 注解的使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Repository-子接口详解"><span class="nav-number">2.</span> <span class="nav-text">Repository 子接口详解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询方法定义规则和使用"><span class="nav-number">3.</span> <span class="nav-text">查询方法定义规则和使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Query注解使用"><span class="nav-number">4.</span> <span class="nav-text">Query注解使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新操作整合事务使用"><span class="nav-number">5.</span> <span class="nav-text">更新操作整合事务使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FutureWL</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
