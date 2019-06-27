@@ -542,6 +542,12 @@
 
 <p>配置完成后也需要重启mysql服务和docker容器，操作和配置Master(主)一致。</p>
 <h3 id="链接Master-主-和Slave-从"><a href="#链接Master-主-和Slave-从" class="headerlink" title="链接Master(主)和Slave(从)"></a>链接Master(主)和Slave(从)</h3><p>在Master进入mysql，执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show master status;</span><br></pre></td></tr></table></figure>
+
+<p>File和Position字段的值后面将会用到，在后面的操作完成之前，需要保证Master库不能做任何操作，否则将会引起状态变化，File和Position字段的值变化。</p>
+<p>在Slave中进入 mysql，执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">change master to master_host=&apos;mysql-master&apos;, master_user=&apos;slave&apos;, master_password=&apos;123456&apos;, master_port=3306, master_log_file=&apos;mysql-bin.000001&apos;, master_log_pos= 2830, master_connect_retry=30;</span><br></pre></td></tr></table></figure>
+
 
           
         
