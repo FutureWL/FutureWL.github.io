@@ -6,7 +6,7 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -137,7 +137,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -147,7 +147,7 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -287,20 +287,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/23/轻松愉快玩转SpringData-2018-08-23-轻松愉快之玩转SpringData第四章SpringDataJPA进阶/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -343,7 +343,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/轻松愉快之玩转SpringData/" itemprop="url" rel="index">
                     <span itemprop="name">轻松愉快之玩转SpringData</span>
                   </a>
@@ -388,7 +388,9 @@
 </ul>
 <p>Repository是一个空接口，标记接口 <code>没有包含方法声明的接口</code></p>
 <a id="more"></a>
+
 <h3 id="RepositoryDefinition-注解的使用"><a href="#RepositoryDefinition-注解的使用" class="headerlink" title="@RepositoryDefinition 注解的使用"></a>@RepositoryDefinition 注解的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> weilai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0.0 2018/8/23</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RepositoryDefinition</span>(domainClass = Employee.class, idClass = Integer.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeRepository</span> </span>&#123; <span class="comment">// extends Repository&lt;Employee, Integer&gt; &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Employee <span class="title">findByName</span><span class="params">(String name)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h1 id="Repository-子接口详解"><a href="#Repository-子接口详解" class="headerlink" title="Repository 子接口详解"></a>Repository 子接口详解</h1><ul>
 <li>CrudRepository：<ul>
 <li>继承 Repository，实现了 CRUD 相关的方法。</li>
@@ -407,121 +409,120 @@
 <table>
 <thead>
 <tr>
-<th style="text-align:center">Keyword</th>
+<th align="center">Keyword</th>
 <th>Sample</th>
 <th>JPQL snippet</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">And</td>
+<tbody><tr>
+<td align="center">And</td>
 <td>findByLastnameAndFirstname</td>
 <td>where <br> x.lastname = ?1 <br> and <br> x.firstname = ?2</td>
 </tr>
 <tr>
-<td style="text-align:center">Or</td>
+<td align="center">Or</td>
 <td>findByLastnameOrFirstname</td>
 <td>where <br> x.lastname = ?1 <br> or <br> x.firstname = ?2</td>
 </tr>
 <tr>
-<td style="text-align:center">Between</td>
+<td align="center">Between</td>
 <td>findByStartDataBetween</td>
 <td>where <br> x.startData between <br> ?1 and ?2</td>
 </tr>
 <tr>
-<td style="text-align:center">LessThan</td>
+<td align="center">LessThan</td>
 <td>findByAgeLessThan</td>
 <td>where x.age &lt; ?1</td>
 </tr>
 <tr>
-<td style="text-align:center">GreaterThan</td>
+<td align="center">GreaterThan</td>
 <td>findByAgeGreaterThan</td>
 <td>where x.age &gt; ?1</td>
 </tr>
 <tr>
-<td style="text-align:center">After</td>
+<td align="center">After</td>
 <td>findByStartDataAfter</td>
 <td>where x.startData &gt; ?1</td>
 </tr>
 <tr>
-<td style="text-align:center">Before</td>
+<td align="center">Before</td>
 <td>findByStartDataAfter</td>
 <td>where x.startData &gt; ?1</td>
 </tr>
 <tr>
-<td style="text-align:center">IsNull</td>
+<td align="center">IsNull</td>
 <td>findByAgeIsNull</td>
 <td>where x.age is null</td>
 </tr>
 <tr>
-<td style="text-align:center">IsNotNull,NotNull</td>
+<td align="center">IsNotNull,NotNull</td>
 <td>findByAge(Is)NotNull</td>
 <td>where x.age is not null</td>
 </tr>
 <tr>
-<td style="text-align:center">Like</td>
+<td align="center">Like</td>
 <td>findByFirstnameLike</td>
 <td>… where x.firstname like ?1</td>
 </tr>
 <tr>
-<td style="text-align:center">NotLike</td>
+<td align="center">NotLike</td>
 <td>findByFirstnameNotLike</td>
 <td>… where x.firstname not like ?1</td>
 </tr>
 <tr>
-<td style="text-align:center">StartingWith</td>
+<td align="center">StartingWith</td>
 <td>findByFirstnameStartingWith</td>
 <td>… where x.firstname like ?1 (parameter bound with appended %)</td>
 </tr>
 <tr>
-<td style="text-align:center">EndingWith</td>
+<td align="center">EndingWith</td>
 <td>findByFirstnameEndingWith</td>
 <td>… where x.firstname like ?1 (parameter bound with prepended %)</td>
 </tr>
 <tr>
-<td style="text-align:center">Containing</td>
+<td align="center">Containing</td>
 <td>findByFirstnameContaining</td>
 <td>… where x.firstname like ?1 (parameter bound wrapped in %)</td>
 </tr>
 <tr>
-<td style="text-align:center">OrderBy</td>
+<td align="center">OrderBy</td>
 <td>findByAgeOrderByLastnameDesc</td>
 <td>… where x.age = ?1 order by x.lastname desc</td>
 </tr>
 <tr>
-<td style="text-align:center">Not</td>
+<td align="center">Not</td>
 <td>findByLastnameNot</td>
 <td>… where x.lastname &lt;&gt; ?1</td>
 </tr>
 <tr>
-<td style="text-align:center">In</td>
+<td align="center">In</td>
 <td>findByAgeIn(Collection<age> ages)</age></td>
 <td>… where x.age in ?1</td>
 </tr>
 <tr>
-<td style="text-align:center">NotIn</td>
+<td align="center">NotIn</td>
 <td>findByAgeNotIn(Collection<age> ages)</age></td>
 <td>… where x.age not in ?1</td>
 </tr>
 <tr>
-<td style="text-align:center">True</td>
+<td align="center">True</td>
 <td>findByActiveTrue()</td>
 <td>… where x.active = true</td>
 </tr>
 <tr>
-<td style="text-align:center">False</td>
+<td align="center">False</td>
 <td>findByActiveFalse()</td>
 <td>… where x.active = false</td>
 </tr>
 <tr>
-<td style="text-align:center">IgnoreCase</td>
+<td align="center">IgnoreCase</td>
 <td>findByFirstnameIgnoreCase</td>
 <td>… where UPPER(x.firstame) = UPPER(?1)</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>操作实例</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.imooc.repository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.imooc.domain.Employee;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.repository.Repository;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.repository.RepositoryDefinition;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 数据操作实体</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> weilai</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0.0 2018/8/23</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RepositoryDefinition</span>(domainClass = Employee.class, idClass = Integer.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeRepository</span> </span>&#123; <span class="comment">// extends Repository&lt;Employee, Integer&gt; &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Employee <span class="title">findByName</span><span class="params">(String name)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// where name like ?% and age &lt;?</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Employee&gt; <span class="title">findByNameStartingWithAndAgeLessThan</span><span class="params">(String name, Integer age)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// where name like ?% and age &gt;?</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Employee&gt; <span class="title">findByNameEndingWithAndAgeLessThan</span><span class="params">(String name, Integer age)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// where name in (?,?,?....) or age &gt;?</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Employee&gt; <span class="title">findByNameInOrAgeLessThan</span><span class="params">(List&lt;String&gt; nameList, Integer age)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>对于按照方法命名规则来使用的话，有弊端：</p>
 <ol>
 <li>方法名会比较长： 约定大于配置</li>
@@ -543,6 +544,7 @@
 <li>@Query、 @Modifying、@Transactional的综合使用</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Query</span>(nativeQuery = <span class="keyword">true</span>, value = <span class="string">"select count(1) from employee"</span>) <span class="comment">// 注意！！此处 employee 是表名</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getCount</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Modifying</span></span><br><span class="line"><span class="meta">@Query</span>(<span class="string">"update Employee o set o.age = :age where o.id = :id"</span>) <span class="comment">// 注意！！此处 Employee 是类名</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(@Param(<span class="string">"id"</span>)</span> Integer id, @<span class="title">Param</span><span class="params">(<span class="string">"age"</span>)</span> Integer age)</span>;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(Integer id, Integer age)</span> </span>&#123;</span><br><span class="line">        employeeRepository.update(id, age);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
 <p>一般在 Service 的一个操作中有很多 dao方法，所以都要让他们在一个事务中。</p>
 
       
@@ -644,7 +646,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="FutureWL">
             
@@ -659,7 +661,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -695,7 +697,7 @@
             
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/Future" target="_blank" title="GitHub">
+                  <a href="https://github.com/FutureWL" target="_blank" title="GitHub">
                     
                       <i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>

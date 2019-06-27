@@ -6,7 +6,7 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="tomcat虚拟目录设置概要 虚拟WEB目录的概念与原理 设置WEB站点的根目录和虚拟子目录 部署描述符与目录的默认网页  虚拟WEB目录的概念与原理 认识Tomcat的基准目录、根目录 认识虚拟子目录 虚拟目录映射原理   认识Tomcat的基准目录、根目录123https://www.baidu.com/course/2064.html站点地址:https://www.baidu.com/ T">
+<meta name="description" content="tomcat虚拟目录设置概要 虚拟WEB目录的概念与原理 设置WEB站点的根目录和虚拟子目录 部署描述符与目录的默认网页  虚拟WEB目录的概念与原理 认识Tomcat的基准目录、根目录 认识虚拟子目录 虚拟目录映射原理   认识Tomcat的基准目录、根目录123https://www.baidu.com/course/2064.html站点地址:https://www.baidu.com/">
 <meta name="keywords" content="tomcat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tomcat-进阶-01-虚拟目录设置">
 <meta property="og:url" content="http://yoursite.com/2017/10/05/tomcat-进阶-01-虚拟目录设置/index.html">
 <meta property="og:site_name" content="FutureWL&#39;s Blog">
-<meta property="og:description" content="tomcat虚拟目录设置概要 虚拟WEB目录的概念与原理 设置WEB站点的根目录和虚拟子目录 部署描述符与目录的默认网页  虚拟WEB目录的概念与原理 认识Tomcat的基准目录、根目录 认识虚拟子目录 虚拟目录映射原理   认识Tomcat的基准目录、根目录123https://www.baidu.com/course/2064.html站点地址:https://www.baidu.com/ T">
+<meta property="og:description" content="tomcat虚拟目录设置概要 虚拟WEB目录的概念与原理 设置WEB站点的根目录和虚拟子目录 部署描述符与目录的默认网页  虚拟WEB目录的概念与原理 认识Tomcat的基准目录、根目录 认识虚拟子目录 虚拟目录映射原理   认识Tomcat的基准目录、根目录123https://www.baidu.com/course/2064.html站点地址:https://www.baidu.com/">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-06-24T00:50:18.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat-进阶-01-虚拟目录设置">
-<meta name="twitter:description" content="tomcat虚拟目录设置概要 虚拟WEB目录的概念与原理 设置WEB站点的根目录和虚拟子目录 部署描述符与目录的默认网页  虚拟WEB目录的概念与原理 认识Tomcat的基准目录、根目录 认识虚拟子目录 虚拟目录映射原理   认识Tomcat的基准目录、根目录123https://www.baidu.com/course/2064.html站点地址:https://www.baidu.com/ T">
+<meta name="twitter:description" content="tomcat虚拟目录设置概要 虚拟WEB目录的概念与原理 设置WEB站点的根目录和虚拟子目录 部署描述符与目录的默认网页  虚拟WEB目录的概念与原理 认识Tomcat的基准目录、根目录 认识虚拟子目录 虚拟目录映射原理   认识Tomcat的基准目录、根目录123https://www.baidu.com/course/2064.html站点地址:https://www.baidu.com/">
 
 
 
@@ -138,7 +138,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -148,7 +148,7 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -288,20 +288,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/05/tomcat-进阶-01-虚拟目录设置/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -371,8 +371,10 @@
 <li>虚拟目录映射原理 </li>
 </ul>
 <h4 id="认识Tomcat的基准目录、根目录"><a href="#认识Tomcat的基准目录、根目录" class="headerlink" title="认识Tomcat的基准目录、根目录"></a>认识Tomcat的基准目录、根目录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://www.baidu.com/course/2064.html</span><br><span class="line"></span><br><span class="line">站点地址:https://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <p>Tomcat 默认根目录</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apache-tomcat-8.0.24\webapps\ROOT</span><br></pre></td></tr></table></figure>
+
 <h4 id="认识虚拟子目录"><a href="#认识虚拟子目录" class="headerlink" title="认识虚拟子目录"></a>认识虚拟子目录</h4><p>物理目录：实际存放在主目录（根目录）下的子文件夹</p>
 <p>虚拟目录：URL地址中不存在于主目录（根目录）下面的子文件夹</p>
 <h4 id="虚拟目录映射原理"><a href="#虚拟目录映射原理" class="headerlink" title="虚拟目录映射原理"></a>虚拟目录映射原理</h4><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
@@ -384,14 +386,17 @@
 <li>通过修改<host>元素的appBase属性所设置的基准目录路径来改变根目录位置</host></li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Host name=&quot;localhost&quot; appBase=&quot;webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;&lt;/Host&gt;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>使用server.xml文件中的<content>元素（<span style="color:red">不建议</span>）</content></li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Content docBase=&quot;E:\myapp&quot; path=&quot;&quot; reloadable=&quot;true&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>在&lt;catalina_home&gt;/conf/Catalina/localhost/下增加ROOT.xml文件（<span style="color:red">推荐</span>）</li>
+<li>在<catalina_home>/conf/Catalina/localhost/下增加ROOT.xml文件（<span style="color:red">推荐</span>）</catalina_home></li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Content docBase=&quot;E:\myapp&quot; path=&quot;&quot; reloadable=&quot;true&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
 <h3 id="部署描述符与目录的默认网页"><a href="#部署描述符与目录的默认网页" class="headerlink" title="部署描述符与目录的默认网页"></a>部署描述符与目录的默认网页</h3><ul>
 <li>部署描述符的作用</li>
 <li>设置目录的默认网页</li>
@@ -502,7 +507,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="FutureWL">
             
@@ -517,7 +522,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -553,7 +558,7 @@
             
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/Future" target="_blank" title="GitHub">
+                  <a href="https://github.com/FutureWL" target="_blank" title="GitHub">
                     
                       <i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>

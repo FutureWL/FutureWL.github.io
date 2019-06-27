@@ -6,7 +6,7 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -136,7 +136,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -147,7 +147,7 @@
   page-home">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -287,20 +287,151 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/Docker开启远程端口/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FutureWL">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FutureWL's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/27/Docker开启远程端口/" itemprop="url">Docker开启远程端口</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-27T19:53:01+08:00">
+                2019-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>进入到/lib/systemd/system/docker.service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /lib/systemd/system/docker.service</span><br></pre></td></tr></table></figure>
+
+<p>找到ExecStart行，修改成下边这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock</span><br></pre></td></tr></table></figure>
+
+<p>配置生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>重启docker</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/25/基于Docker的Mysql主从复制搭建/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -368,39 +499,49 @@
 <p>然后使用此镜像启动容器，这里需要分别启动主从两个容器</p>
 <p>Master(主)：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 --name mysql-master -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7</span><br></pre></td></tr></table></figure>
+
 <p>Slave(从)：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3307:3306 --name mysql-slave --link mysql-master:mysql-master -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7</span><br></pre></td></tr></table></figure>
+
 <h3 id="配置Master-主"><a href="#配置Master-主" class="headerlink" title="配置Master(主)"></a>配置Master(主)</h3><p>通过</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 627a2368c865 /bin/bash</span><br></pre></td></tr></table></figure>
+
 <p>命令进入到Master容器内部，也可以通过</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mysql-master /bin/bash</span><br></pre></td></tr></table></figure>
+
 <p>命令进入。627a2368c865 是容器的id,而mysql-master是容器的名称。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/mysql</span><br></pre></td></tr></table></figure>
+
 <p>切换到/etc/mysql目录下，然后vi my.cnf对my.cnf进行编辑。此时会报出bash: vi: command not found，需要我们在docker容器内部自行安装vim。</p>
 <p>使用</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install vim</span><br></pre></td></tr></table></figure>
+
 <p>命令安装vim</p>
-<p>会出现如下问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree       </span><br><span class="line">Reading state information... Done</span><br><span class="line">E: Unable to locate package vim</span><br></pre></td></tr></table></figure></p>
-<p>执行 apt-get update，然后再次执行apt-get install vim即可成功安装vim。然后我们就可以使用vim编辑my.cnf，在my.cnf中添加如下配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">## 同一局域网内注意要唯一</span><br><span class="line">server-id=100  </span><br><span class="line">## 开启二进制日志功能，可以随便取（关键）</span><br><span class="line">log-bin=mysql-bin</span><br></pre></td></tr></table></figure></p>
+<p>会出现如下问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree       </span><br><span class="line">Reading state information... Done</span><br><span class="line">E: Unable to locate package vim</span><br></pre></td></tr></table></figure>
+
+<p>执行 apt-get update，然后再次执行apt-get install vim即可成功安装vim。然后我们就可以使用vim编辑my.cnf，在my.cnf中添加如下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">## 同一局域网内注意要唯一</span><br><span class="line">server-id=100  </span><br><span class="line">## 开启二进制日志功能，可以随便取（关键）</span><br><span class="line">log-bin=mysql-bin</span><br></pre></td></tr></table></figure>
+
 <p>配置完成之后，需要重启mysql服务使配置生效。</p>
 <p>使用</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysql restart</span><br></pre></td></tr></table></figure>
+
 <p>完成重启。</p>
 <p>重启mysql服务时会使得docker容器停止，</p>
 <p>我们还需要</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start mysql-master</span><br></pre></td></tr></table></figure>
+
 <p>启动容器。</p>
 <p>下一步在Master数据库创建数据同步用户，授予用户 slave REPLICATION SLAVE 权限 和 REPLICATION CLIENT 权限，用于在主从库之间同步数据。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &apos;slave&apos;@&apos;%&apos; IDENTIFIED BY &apos;123456&apos;;</span><br><span class="line"></span><br><span class="line">GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &apos;slave&apos;@&apos;%&apos;;</span><br></pre></td></tr></table></figure>
+
 <h3 id="配置Slave-从"><a href="#配置Slave-从" class="headerlink" title="配置Slave(从)"></a>配置Slave(从)</h3><p>和配置Master(主)一样，在Slave配置文件my.cnf中添加如下配置：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">## 设置server_id,注意要唯一</span><br><span class="line">server-id=101  </span><br><span class="line">## 开启二进制日志功能，以备Slave作为其它Slave的Master时使用</span><br><span class="line">log-bin=mysql-slave-bin   </span><br><span class="line">## relay_log配置中继日志</span><br><span class="line">relay_log=edu-mysql-relay-bin</span><br></pre></td></tr></table></figure>
+
+
 <p>配置完成后也需要重启mysql服务和docker容器，操作和配置Master(主)一致。</p>
 <h3 id="链接Master-主-和Slave-从"><a href="#链接Master-主-和Slave-从" class="headerlink" title="链接Master(主)和Slave(从)"></a>链接Master(主)和Slave(从)</h3><p>在Master进入mysql，执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show master status;</span><br></pre></td></tr></table></figure>
-<p>mark</p>
-<p>File和Position字段的值后面将会用到，在后面的操作完成之前，需要保证Master库不能做任何操作，否则将会引起状态变化，File和Position字段的值变化。</p>
-<p>在Slave 中进入 mysql，执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">change master to master_host=&apos;mysql-master&apos;, master_user=&apos;slave&apos;, master_password=&apos;123456&apos;, master_port=3306, master_log_file=&apos;mysql-bin.000001&apos;, master_log_pos= 2830, master_connect_retry=30;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -444,20 +585,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/page/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -532,41 +673,72 @@
 </ul>
 <p>关系不用在意是否合理，只是为了涵盖几个基本的关系</p>
 <p>one to one 关系</p>
-<p>数据实体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">@Entity</span><br><span class="line">public class User &#123;</span><br><span class="line"></span><br><span class="line">    @Id</span><br><span class="line">    @GeneratedValue(strategy = GenerationType.IDENTITY)</span><br><span class="line">    private Long id;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    private Integer age;</span><br><span class="line"></span><br><span class="line">    private Date createAt;</span><br><span class="line"></span><br><span class="line">    @OneToOne(mappedBy = &quot;user&quot;)</span><br><span class="line">    private Card card;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>数据实体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">@Entity</span><br><span class="line">public class User &#123;</span><br><span class="line"></span><br><span class="line">    @Id</span><br><span class="line">    @GeneratedValue(strategy = GenerationType.IDENTITY)</span><br><span class="line">    private Long id;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    private Integer age;</span><br><span class="line"></span><br><span class="line">    private Date createAt;</span><br><span class="line"></span><br><span class="line">    @OneToOne(mappedBy = &quot;user&quot;)</span><br><span class="line">    private Card card;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">@Entity</span><br><span class="line">public class Card &#123;</span><br><span class="line"></span><br><span class="line">    @Id</span><br><span class="line">    @GeneratedValue(strategy = GenerationType.IDENTITY)</span><br><span class="line">    private Long id;</span><br><span class="line"></span><br><span class="line">    private String card_num;</span><br><span class="line"></span><br><span class="line">    private Date createAt;</span><br><span class="line"></span><br><span class="line">    @OneToOne</span><br><span class="line">    @JoinColumn(name = &quot;user_id&quot;)</span><br><span class="line">    @RestResource(path = &quot;user&quot;, rel = &quot;user&quot;)</span><br><span class="line">    private User user;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Repository结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public interface UserRepository extends JpaRepository&lt;User, Long&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+<p>Repository结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public interface UserRepository extends JpaRepository&lt;User, Long&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public interface CardRepository extends JpaRepository&lt;Card, Long&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过以上的代码，Spring Data Rest 就已经足够帮我们维护其用户（user）和身份证（card）二者的关系，并且提供了HAL的接口。就是这么方便！下面，我们使用HAL Browser ，可以更加方便的在浏览器中查看接口，以及他们之间的关系。<br>HAL Browser 使用<br>HAL-browser 是基于hal+json的media type的API浏览器，Spring Data Rest 提供了集成，pom文件中加个这个。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-data-rest-hal-browser&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+
+<p>通过以上的代码，Spring Data Rest 就已经足够帮我们维护其用户（user）和身份证（card）二者的关系，并且提供了HAL的接口。就是这么方便！下面，我们使用HAL Browser ，可以更加方便的在浏览器中查看接口，以及他们之间的关系。<br>HAL Browser 使用<br>HAL-browser 是基于hal+json的media type的API浏览器，Spring Data Rest 提供了集成，pom文件中加个这个。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-data-rest-hal-browser&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
 <p>启动我们的程序，打开浏览器 <a href="http://127.0.0.1:8081/api/v1/browser/index.html#/api/v1" target="_blank" rel="noopener">http://127.0.0.1:8081/api/v1/browser/index.html#/api/v1</a></p>
 <p>api/v1 是我指定的接口前缀，通过配置项 spring.data.rest.base-path 指定</p>
 <p>可以看到如下界面</p>
 <p>hal-browser</p>
-<p>具体的使用这里不再赘述，可以自己点点或者看看这个。<br>接口调用<br>新增一个user<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;Lucy\&quot;,\&quot;age\&quot;:25&#125;&quot; http://127.0.0.1:8081/api/v1/users</span><br></pre></td></tr></table></figure></p>
+<p>具体的使用这里不再赘述，可以自己点点或者看看这个。<br>接口调用<br>新增一个user</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;Lucy\&quot;,\&quot;age\&quot;:25&#125;&quot; http://127.0.0.1:8081/api/v1/users</span><br></pre></td></tr></table></figure>
+
 <p>结果返回：</p>
 <p>新增用户</p>
-<p>返回结果的状态码是201<br>返回实体内容<br>返回_links资源，分别指向自己和对应的card资源的URI<br>新增一个card<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;cardNum\&quot;:\&quot;num1\&quot;&#125;&quot; http://127.0.0.1:8081/api/v1/cards</span><br></pre></td></tr></table></figure></p>
+<p>返回结果的状态码是201<br>返回实体内容<br>返回_links资源，分别指向自己和对应的card资源的URI<br>新增一个card</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;cardNum\&quot;:\&quot;num1\&quot;&#125;&quot; http://127.0.0.1:8081/api/v1/cards</span><br></pre></td></tr></table></figure>
+
 <p>新增card</p>
-<p>建立关系<br>创建的两个实体之后，我们需要建立起二者的关系。在Spring Data Rest中，二者的关系绑定，是通过URI来维护，用PUT请求动作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PUT -H &quot;Content-Type:text/uri-list&quot; -d &quot;http://127.0.0.1:8081/api/v1/users/1&quot; http://127.0.0.1:8081/api/v1/cards/1/user</span><br></pre></td></tr></table></figure></p>
-<p>也可以用这样维护<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PUT -H &quot;Content-Type:text/uri-list&quot; -d &quot;1&quot; http://127.0.0.1:8081/api/v1/cards/1/user</span><br></pre></td></tr></table></figure></p>
-<p>或者：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PUT -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/1&quot; http://127.0.0.1:8081/api/v1/cards/1/user</span><br></pre></td></tr></table></figure></p>
+<p>建立关系<br>创建的两个实体之后，我们需要建立起二者的关系。在Spring Data Rest中，二者的关系绑定，是通过URI来维护，用PUT请求动作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PUT -H &quot;Content-Type:text/uri-list&quot; -d &quot;http://127.0.0.1:8081/api/v1/users/1&quot; http://127.0.0.1:8081/api/v1/cards/1/user</span><br></pre></td></tr></table></figure>
+
+<p>也可以用这样维护</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PUT -H &quot;Content-Type:text/uri-list&quot; -d &quot;1&quot; http://127.0.0.1:8081/api/v1/cards/1/user</span><br></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PUT -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/1&quot; http://127.0.0.1:8081/api/v1/cards/1/user</span><br></pre></td></tr></table></figure>
+
 <p>三者是等价的操作。<br>如果创建成功，将会返回响应码204，如下图：</p>
 <p>关系创建</p>
-<p>我们来核实下user下的card<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X GET http://127.0.0.1:8081/api/v1/users/1/card</span><br></pre></td></tr></table></figure></p>
+<p>我们来核实下user下的card</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X GET http://127.0.0.1:8081/api/v1/users/1/card</span><br></pre></td></tr></table></figure>
+
 <p>返回如下：</p>
 <p>获取user的card</p>
 <p>上图可以看出，user-card的关系维护成功！</p>
 <p>以上是通过PUT Card资源的User来维护二者关系。外键在于Card上，是资源维护方。反过来就通过User资源的Card维护是不被允许的。这个是我的一个疑问，没有深入研究过，一个tip</p>
-<p>one to many 关系<br>数据实体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">@Entity</span><br><span class="line">public class Car &#123;</span><br><span class="line"></span><br><span class="line">    @Id</span><br><span class="line">    @GeneratedValue(strategy = GenerationType.IDENTITY)</span><br><span class="line">    private Long id;</span><br><span class="line"></span><br><span class="line">    private String carNum;</span><br><span class="line"></span><br><span class="line">    private Date createAt;</span><br><span class="line"></span><br><span class="line">    @ManyToOne</span><br><span class="line">    @JoinColumn(name = &quot;user_id&quot;)</span><br><span class="line">    private User user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>one to many 关系<br>数据实体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">@Entity</span><br><span class="line">public class Car &#123;</span><br><span class="line"></span><br><span class="line">    @Id</span><br><span class="line">    @GeneratedValue(strategy = GenerationType.IDENTITY)</span><br><span class="line">    private Long id;</span><br><span class="line"></span><br><span class="line">    private String carNum;</span><br><span class="line"></span><br><span class="line">    private Date createAt;</span><br><span class="line"></span><br><span class="line">    @ManyToOne</span><br><span class="line">    @JoinColumn(name = &quot;user_id&quot;)</span><br><span class="line">    private User user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>@Data<br>@Entity<br>public class User {</p>
 <pre><code>// ...
 
 @OneToMany(mappedBy = &quot;user&quot;)
-private List&lt;Car&gt; cars = new ArrayList&lt;&gt;();
-</code></pre><p>   // …<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Repository结构</span><br></pre></td></tr></table></figure></p>
-<p>public interface CarRepository extends JpaRepository&lt;Car, Long&gt; {<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">接口调用</span><br><span class="line">新增一个car</span><br></pre></td></tr></table></figure></p>
-<p>  curl -i -X POST -H “Content-Type:application/json” -d “{\”carNum\”:\”A1001\”}” <a href="http://127.0.0.1:8081/api/v1/cars" target="_blank" rel="noopener">http://127.0.0.1:8081/api/v1/cars</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">返回如下：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">建立关系</span><br><span class="line">一对多的关系中，也是通过URI通过PUT请求维护关系。</span><br></pre></td></tr></table></figure></p>
-<p>  curl -i -X PUT -H “Content-Type:text/uri-list” -d “<a href="http://127.0.0.1:8081/api/v1/users/1&quot;" target="_blank" rel="noopener">http://127.0.0.1:8081/api/v1/users/1&quot;</a> <a href="http://127.0.0.1:8081/api/v1/cars/1/user" target="_blank" rel="noopener">http://127.0.0.1:8081/api/v1/cars/1/user</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">结果返回：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">我们看下User下的Cars</span><br></pre></td></tr></table></figure></p>
-<p>  curl -i -X GET <a href="http://127.0.0.1:8081/api/v1/users/1/cars" target="_blank" rel="noopener">http://127.0.0.1:8081/api/v1/users/1/cars</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">结果如下：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">很明显，已经可以看到User下的Cars。</span><br><span class="line"></span><br><span class="line">也是只有通过多的一方维护关系</span><br><span class="line"></span><br><span class="line">many to many 关系</span><br><span class="line">数据实体</span><br></pre></td></tr></table></figure></p>
+private List&lt;Car&gt; cars = new ArrayList&lt;&gt;();</code></pre><p>   // …<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Repository结构</span><br></pre></td></tr></table></figure>
+
+<p>public interface CarRepository extends JpaRepository&lt;Car, Long&gt; {<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">接口调用</span><br><span class="line">新增一个car</span><br></pre></td></tr></table></figure>
+
+<p>  curl -i -X POST -H “Content-Type:application/json” -d “{&quot;carNum&quot;:&quot;A1001&quot;}” <a href="http://127.0.0.1:8081/api/v1/cars" target="_blank" rel="noopener">http://127.0.0.1:8081/api/v1/cars</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">返回如下：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">建立关系</span><br><span class="line">一对多的关系中，也是通过URI通过PUT请求维护关系。</span><br></pre></td></tr></table></figure>
+
+<p>  curl -i -X PUT -H “Content-Type:text/uri-list” -d “<a href="http://127.0.0.1:8081/api/v1/users/1&quot;" target="_blank" rel="noopener">http://127.0.0.1:8081/api/v1/users/1&quot;</a> <a href="http://127.0.0.1:8081/api/v1/cars/1/user" target="_blank" rel="noopener">http://127.0.0.1:8081/api/v1/cars/1/user</a> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">结果返回：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">我们看下User下的Cars</span><br></pre></td></tr></table></figure>
+
+<p>  curl -i -X GET <a href="http://127.0.0.1:8081/api/v1/users/1/cars" target="_blank" rel="noopener">http://127.0.0.1:8081/api/v1/users/1/cars</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">结果如下：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">很明显，已经可以看到User下的Cars。</span><br><span class="line"></span><br><span class="line">也是只有通过多的一方维护关系</span><br><span class="line"></span><br><span class="line">many to many 关系</span><br><span class="line">数据实体</span><br></pre></td></tr></table></figure>
+
 <p>@Data<br>@Entity<br>public class Language {</p>
 <pre><code>@Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -578,29 +750,57 @@ private String name;
 @JoinTable(name = &quot;rel_user_language&quot;,
         joinColumns = @JoinColumn(name = &quot;language_id&quot;, referencedColumnName = &quot;id&quot;, nullable = false),
         inverseJoinColumns = @JoinColumn(name = &quot;user_id&quot;, referencedColumnName = &quot;id&quot;, nullable = false))
-private List&lt;User&gt; users = new ArrayList&lt;&gt;();
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">@Data</span><br><span class="line">@Entity</span><br><span class="line">public class User &#123;</span><br><span class="line">    // ...</span><br><span class="line"></span><br><span class="line">    @ManyToMany(mappedBy = &quot;users&quot;, cascade = CascadeType.ALL)</span><br><span class="line">    private List&lt;Language&gt; languages = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    //...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Repository结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public interface LanguageRepository extends JpaRepository&lt;Language, Long&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>接口调用<br>同样新增方式，多门语言，多个用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;eng\&quot;&#125;&quot; http://127.0.0.1:8081/api/v1/languages</span><br></pre></td></tr></table></figure></p>
+private List&lt;User&gt; users = new ArrayList&lt;&gt;();</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">@Data</span><br><span class="line">@Entity</span><br><span class="line">public class User &#123;</span><br><span class="line">    // ...</span><br><span class="line"></span><br><span class="line">    @ManyToMany(mappedBy = &quot;users&quot;, cascade = CascadeType.ALL)</span><br><span class="line">    private List&lt;Language&gt; languages = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    //...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Repository结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public interface LanguageRepository extends JpaRepository&lt;Language, Long&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接口调用<br>同样新增方式，多门语言，多个用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;eng\&quot;&#125;&quot; http://127.0.0.1:8081/api/v1/languages</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;chs\&quot;&#125;&quot; http://127.0.0.1:8081/api/v1/languages</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;jp\&quot;&#125;&quot; http://127.0.0.1:8081/api/v1/languages</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;Jack\&quot;,\&quot;age\&quot;:25&#125;&quot; http://127.0.0.1:8081/api/v1/users</span><br></pre></td></tr></table></figure>
-<p>创建关系<br>多对多的关系创建方式比之前两种更为丰富。<br>PUT方式添加关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PUT -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/1&quot; http://127.0.0.1:8081/api/v1/languages/1/users</span><br></pre></td></tr></table></figure></p>
-<p>POST方式添加关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/1&quot; http://127.0.0.1:8081/api/v1/languages/2/usersrs</span><br></pre></td></tr></table></figure></p>
-<p>PATCH方式添加关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PATCH -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/1&quot; http://127.0.0.1:8081/api/v1/languages/3/users</span><br></pre></td></tr></table></figure></p>
-<p>以上三种方式都可以用于创建多对多的关系，可以查看下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X GET http://127.0.0.1:8081/api/v1/users/1/languages</span><br></pre></td></tr></table></figure></p>
+
+<p>创建关系<br>多对多的关系创建方式比之前两种更为丰富。<br>PUT方式添加关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PUT -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/1&quot; http://127.0.0.1:8081/api/v1/languages/1/users</span><br></pre></td></tr></table></figure>
+
+<p>POST方式添加关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/1&quot; http://127.0.0.1:8081/api/v1/languages/2/usersrs</span><br></pre></td></tr></table></figure>
+
+<p>PATCH方式添加关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PATCH -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/1&quot; http://127.0.0.1:8081/api/v1/languages/3/users</span><br></pre></td></tr></table></figure>
+
+<p>以上三种方式都可以用于创建多对多的关系，可以查看下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X GET http://127.0.0.1:8081/api/v1/users/1/languages</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;_embedded&quot; : &#123;</span><br><span class="line">    &quot;languages&quot; : [ &#123;</span><br><span class="line">      &quot;name&quot; : &quot;eng&quot;,</span><br><span class="line">      &quot;_links&quot; : &#123;</span><br><span class="line">        &quot;self&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/1&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;language&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/1&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;users&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/1/users&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      &quot;name&quot; : &quot;chs&quot;,</span><br><span class="line">      &quot;_links&quot; : &#123;</span><br><span class="line">        &quot;self&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/2&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;language&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/2&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;users&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/2/users&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      &quot;name&quot; : &quot;jp&quot;,</span><br><span class="line">      &quot;_links&quot; : &#123;</span><br><span class="line">        &quot;self&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/3&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;language&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/3&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;users&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/3/users&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;_links&quot; : &#123;</span><br><span class="line">    &quot;self&quot; : &#123;</span><br><span class="line">      &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1/languages&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>结果上是可以看出，三种方式的结果都成功了。</p>
-<p>反过来，通过语言查看用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X GET http://127.0.0.1:8081/api/v1/languages/3/users</span><br></pre></td></tr></table></figure></p>
+<p>反过来，通过语言查看用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X GET http://127.0.0.1:8081/api/v1/languages/3/users</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;_embedded&quot; : &#123;</span><br><span class="line">    &quot;users&quot; : [ &#123;</span><br><span class="line">      &quot;name&quot; : &quot;Lucy&quot;,</span><br><span class="line">      &quot;age&quot; : 25,</span><br><span class="line">      &quot;createAt&quot; : null,</span><br><span class="line">      &quot;_links&quot; : &#123;</span><br><span class="line">        &quot;self&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;user&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;card&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1/card&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;languages&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1/languages&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;cars&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1/cars&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;_links&quot; : &#123;</span><br><span class="line">    &quot;self&quot; : &#123;</span><br><span class="line">      &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/3/users&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>结果也是我们所想要的。<br>PUT POST PATCH 三者之间区别<br>PATCH 请求的作用等同于 POST 请求，而他们二者有点不同于PUT请求。大家都知道 PUT 请求是整体替换，而PATCH是局部更新。在Spring Data Rest 中 PATCH 表示添加，而不是覆盖，PUT请求是完全覆盖。</p>
 <p>我们在原来的数据基础上给User2(Jack)添加一门Language:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PATCH -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/2&quot; http://127.0.0.1:8081/api/v1/languages/1/users</span><br></pre></td></tr></table></figure>
-<p>之后，我们查看下 id 为1的 language 的users<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X GET http://127.0.0.1:8081/api/v1/languages/1/users</span><br></pre></td></tr></table></figure></p>
+
+<p>之后，我们查看下 id 为1的 language 的users</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X GET http://127.0.0.1:8081/api/v1/languages/1/users</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;_embedded&quot; : &#123;</span><br><span class="line">    &quot;users&quot; : [ &#123;</span><br><span class="line">      &quot;name&quot; : &quot;Lucy&quot;,</span><br><span class="line">      &quot;age&quot; : 25,</span><br><span class="line">      &quot;createAt&quot; : null,</span><br><span class="line">      &quot;_links&quot; : &#123;</span><br><span class="line">        &quot;self&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;user&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;card&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1/card&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;languages&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1/languages&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;cars&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/1/cars&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      &quot;name&quot; : &quot;Jack&quot;,</span><br><span class="line">      &quot;age&quot; : 25,</span><br><span class="line">      &quot;createAt&quot; : null,</span><br><span class="line">      &quot;_links&quot; : &#123;</span><br><span class="line">        &quot;self&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;user&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;card&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2/card&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;languages&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2/languages&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;cars&quot; : &#123;</span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2/cars&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;_links&quot; : &#123;</span><br><span class="line">    &quot;self&quot; : &#123;</span><br><span class="line">      &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/1/users&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到拥有两个user。这里可以看出 PATCH 的作用添加了一个item。<br>接下来，我们再调用 PUT 请求，更新下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PUT -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/2&quot; http://127.0.0.1:8081/api/v1/languages/1/users</span><br></pre></td></tr></table></figure></p>
+
+<p>可以看到拥有两个user。这里可以看出 PATCH 的作用添加了一个item。<br>接下来，我们再调用 PUT 请求，更新下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X PUT -H &quot;Content-Type:text/uri-list&quot; -d &quot;api/v1/users/2&quot; http://127.0.0.1:8081/api/v1/languages/1/users</span><br></pre></td></tr></table></figure>
+
 <p>与上一个请求的唯一区别是用了PUT做更新</p>
-<p>再GET下User，结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;                                                                                        </span><br><span class="line">  &quot;_embedded&quot; : &#123;                                                                        </span><br><span class="line">    &quot;users&quot; : [ &#123;                                                                        </span><br><span class="line">      &quot;name&quot; : &quot;Jack&quot;,                                                                   </span><br><span class="line">      &quot;age&quot; : 25,                                                                        </span><br><span class="line">      &quot;createAt&quot; : null,                                                                 </span><br><span class="line">      &quot;_links&quot; : &#123;                                                                       </span><br><span class="line">        &quot;self&quot; : &#123;                                                                       </span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2&quot;                                </span><br><span class="line">        &#125;,                                                                               </span><br><span class="line">        &quot;user&quot; : &#123;                                                                       </span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2&quot;                                </span><br><span class="line">        &#125;,                                                                               </span><br><span class="line">        &quot;card&quot; : &#123;                                                                       </span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2/card&quot;                           </span><br><span class="line">        &#125;,                                                                               </span><br><span class="line">        &quot;languages&quot; : &#123;                                                                  </span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2/languages&quot;                      </span><br><span class="line">        &#125;,                                                                               </span><br><span class="line">        &quot;cars&quot; : &#123;                                                                       </span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2/cars&quot;                           </span><br><span class="line">        &#125;                                                                                </span><br><span class="line">      &#125;                                                                                  </span><br><span class="line">    &#125; ]                                                                                  </span><br><span class="line">  &#125;,                                                                                     </span><br><span class="line">  &quot;_links&quot; : &#123;                                                                           </span><br><span class="line">    &quot;self&quot; : &#123;                                                                           </span><br><span class="line">      &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/1/users&quot;                          </span><br><span class="line">    &#125;                                                                                    </span><br><span class="line">  &#125;                                                                                      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再GET下User，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;                                                                                        </span><br><span class="line">  &quot;_embedded&quot; : &#123;                                                                        </span><br><span class="line">    &quot;users&quot; : [ &#123;                                                                        </span><br><span class="line">      &quot;name&quot; : &quot;Jack&quot;,                                                                   </span><br><span class="line">      &quot;age&quot; : 25,                                                                        </span><br><span class="line">      &quot;createAt&quot; : null,                                                                 </span><br><span class="line">      &quot;_links&quot; : &#123;                                                                       </span><br><span class="line">        &quot;self&quot; : &#123;                                                                       </span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2&quot;                                </span><br><span class="line">        &#125;,                                                                               </span><br><span class="line">        &quot;user&quot; : &#123;                                                                       </span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2&quot;                                </span><br><span class="line">        &#125;,                                                                               </span><br><span class="line">        &quot;card&quot; : &#123;                                                                       </span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2/card&quot;                           </span><br><span class="line">        &#125;,                                                                               </span><br><span class="line">        &quot;languages&quot; : &#123;                                                                  </span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2/languages&quot;                      </span><br><span class="line">        &#125;,                                                                               </span><br><span class="line">        &quot;cars&quot; : &#123;                                                                       </span><br><span class="line">          &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/users/2/cars&quot;                           </span><br><span class="line">        &#125;                                                                                </span><br><span class="line">      &#125;                                                                                  </span><br><span class="line">    &#125; ]                                                                                  </span><br><span class="line">  &#125;,                                                                                     </span><br><span class="line">  &quot;_links&quot; : &#123;                                                                           </span><br><span class="line">    &quot;self&quot; : &#123;                                                                           </span><br><span class="line">      &quot;href&quot; : &quot;http://127.0.0.1:8081/api/v1/languages/1/users&quot;                          </span><br><span class="line">    &#125;                                                                                    </span><br><span class="line">  &#125;                                                                                      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>对比很明显，PUT请求覆盖了之前的数据，只留下了一个Jack的user关联。这就是PUT 和 PATCH 的区别。</p>
 <p>tip1:POST的效果同PATCH 不做多说明。</p>
 <p>tip2:多对多的关系维护中，维护方的资源来维护二者关系。</p>
@@ -650,20 +850,20 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/18/Java基础教程-01-Java语言概述/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -708,7 +908,7 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/编程语言/" itemprop="url" rel="index">
                     <span itemprop="name">编程语言</span>
                   </a>
@@ -814,20 +1014,20 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/14/从零开始 搭建内网穿透服务器/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -905,10 +1105,12 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 以 Ubuntu 为例</span><br><span class="line"></span><br><span class="line"># apt-get install golang</span><br></pre></td></tr></table></figure>
+
 <ol start="3">
 <li>克隆 Ngork 1.x 源码</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># git clone https://www.github.com/futurewl/ngrok</span><br><span class="line"># make</span><br><span class="line"># ./bin/ngrokd</span><br></pre></td></tr></table></figure>
+
 <ol start="4">
 <li><p>编译</p>
 </li>
@@ -968,20 +1170,20 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/23/轻松愉快玩转SpringData-2018-08-23-轻松愉快之玩转SpringData第五章SpringDataJPA高级/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -1026,7 +1228,7 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/轻松愉快之玩转SpringData/" itemprop="url" rel="index">
                     <span itemprop="name">轻松愉快之玩转SpringData</span>
                   </a>
@@ -1124,20 +1326,20 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/23/轻松愉快玩转SpringData-2018-08-23-轻松愉快之玩转SpringData第四章SpringDataJPA进阶/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -1182,7 +1384,7 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/轻松愉快之玩转SpringData/" itemprop="url" rel="index">
                     <span itemprop="name">轻松愉快之玩转SpringData</span>
                   </a>
@@ -1275,20 +1477,20 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/23/轻松愉快玩转SpringData-2018-08-23-轻松愉快之玩转SpringData第三章SpringData快速起步/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -1333,7 +1535,7 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/轻松愉快之玩转SpringData/" itemprop="url" rel="index">
                     <span itemprop="name">轻松愉快之玩转SpringData</span>
                   </a>
@@ -1421,20 +1623,20 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/22/轻松愉快玩转SpringData-2018-08-22-轻松愉快之玩转SpringData第二章使用传统方式访问数据库/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -1479,7 +1681,7 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/轻松愉快之玩转SpringData/" itemprop="url" rel="index">
                     <span itemprop="name">轻松愉快之玩转SpringData</span>
                   </a>
@@ -1572,20 +1774,20 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/22/轻松愉快玩转SpringData-2018-08-22-轻松愉快之玩转SpringData第一章课程介绍/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="FutureWL's Blog">
     </span>
 
@@ -1630,7 +1832,7 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/轻松愉快之玩转SpringData/" itemprop="url" rel="index">
                     <span itemprop="name">轻松愉快之玩转SpringData</span>
                   </a>
@@ -1719,163 +1921,11 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/22/第一章 从一个简单的Web应用开始/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="FutureWL">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FutureWL's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/22/第一章 从一个简单的Web应用开始/" itemprop="url">第一章:从一个简单的Web应用开始</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-22T18:57:17+08:00">
-                2018-08-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/架构探险-从零开始写JavaWeb框架/" itemprop="url" rel="index">
-                    <span itemprop="name">架构探险-从零开始写JavaWeb框架</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>正所谓：“工欲善其事，必先利其器”，在正式开始设计并开发我们的轻量级Java Web 框架之前，有必要掌握以下技能:</p>
-<ul>
-<li>使用 IDEA 搭建并开发 Java 项目；</li>
-<li>使用 Maven 自动化构建 Java 项目；</li>
-<li>使用 Git 管理项目源代码；</li>
-</ul>
-<p><img src="http://p8urbkddr.bkt.clouddn.com/2018-08-22-%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E4%BB%8E%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84Web%E5%BA%94%E7%94%A8%E5%BC%80%E5%A7%8B%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-08-22%20%E4%B8%8B%E5%8D%887.38.53.png" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/22/第一章 从一个简单的Web应用开始/#post.more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1908,7 +1958,7 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="FutureWL">
             
@@ -1923,7 +1973,7 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1959,7 +2009,7 @@ private List&lt;User&gt; users = new ArrayList&lt;&gt;();
             
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/Future" target="_blank" title="GitHub">
+                  <a href="https://github.com/FutureWL" target="_blank" title="GitHub">
                     
                       <i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
